@@ -38,6 +38,23 @@ func newTable(pointer *C.wasm_table_t, ownedBy interface{}) *Table {
 
 	return table
 }
+// NewTable instantiates a new Memory in the given Store.
+//
+// It takes two arguments, the Store and the MemoryType for the Memory.
+//
+//   memory := wasmer.NewTable(
+//       store,
+//       wasmer.NewTableType(wasmer.NewLimits(1, 4)),
+//   )
+//
+func NewTable(store *Store, ty *TableType) *Memory {
+	pointer := C.wasm_memory_new(store.inner(), ty.inner())
+
+	runtime.KeepAlive(store)
+	runtime.KeepAlive(ty)
+
+	return newTable(pointer, nil)
+}
 
 func (self *Table) inner() *C.wasm_table_t {
 	return self._inner

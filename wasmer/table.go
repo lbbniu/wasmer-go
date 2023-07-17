@@ -47,7 +47,7 @@ func newTable(pointer *C.wasm_table_t, ownedBy interface{}) *Table {
 //       wasmer.NewTableType(wasmer.NewLimits(1, 4)),
 //   )
 //
-func NewTable(store *Store, ty *TableType) *Memory {
+func NewTable(store *Store, ty *TableType) *Table {
 	pointer := C.wasm_table_new(store.inner(), ty.inner())
 
 	runtime.KeepAlive(store)
